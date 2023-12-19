@@ -325,7 +325,7 @@ class NewCameraActivity : AppCompatActivity() {
                             finish()
                             val trainingActivityRequest = TrainingActivityRequest(
                                 duration = (targetTimeMillis / 1000).toInt(),
-                                total = 8,
+                                total = rightPushUpCount,
                                 correct = null,
                                 incorrect = null,
                                 userId = prefId,
