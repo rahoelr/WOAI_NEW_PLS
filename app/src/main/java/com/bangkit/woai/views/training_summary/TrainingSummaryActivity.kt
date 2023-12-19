@@ -1,6 +1,7 @@
 package com.bangkit.woai.views.training_summary
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bangkit.woai.databinding.ActivityTrainningSummaryBinding
 
@@ -11,6 +12,9 @@ class TrainingSummaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTrainningSummaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val historyTrainingId = intent.getIntExtra("historyTrainingId", 0)
+        Log.d("historyId", "$historyTrainingId")
     }
 
 }

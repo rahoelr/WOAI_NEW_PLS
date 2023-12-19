@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToast(message: String) {
-        Toast.makeText(this, "Clicked: $message", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "Clicked: $message", Toast.LENGTH_SHORT).show()
     }
 
     private fun hideSystemUI() {

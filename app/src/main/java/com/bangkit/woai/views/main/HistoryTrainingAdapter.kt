@@ -46,8 +46,8 @@ class HistoryTrainingAdapter(
             itemView.setOnClickListener {
                 Log.d("HistoryTrainingAdapter", "Item clicked - Date: ${historyTraining.date}, Time: ${historyTraining.time}, id: ${historyTraining.id}")
 
-                // Buka TrainingSummaryActivity
                 val intent = Intent(itemView.context, TrainingSummaryActivity::class.java)
+                intent.putExtra("historyTrainingId", historyTraining.id)
                 itemView.context.startActivity(intent)
             }
         }
