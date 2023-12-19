@@ -21,6 +21,7 @@ import com.bangkit.woai.data.retrofit.ApiConfig
 import com.bangkit.woai.databinding.ActivityMainBinding
 import com.bangkit.woai.views.authentication.register.RegisterViewModel
 import com.bangkit.woai.views.authentication.register.RegisterViewModelFactory
+import com.bangkit.woai.views.details_training.DetailTrainingActivity
 import com.bangkit.woai.views.history.HistoryActivity
 import com.bangkit.woai.views.profile.ProfileActivity
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +68,12 @@ class MainActivity : AppCompatActivity() {
 
         val adapterMain = WorkoutTrainingAdapter(DummyData.workoutTrainings, object : WorkoutTrainingAdapter.OnItemClickListener {
             override fun onItemClick(workoutTraining: WorkoutTraining) {
-//                showToast(workoutTraining.title)
+                showToast(workoutTraining.title)
+
+                // Pass data to DetailTrainingActivity
+                val detailIntent = Intent(this@MainActivity, DetailTrainingActivity::class.java)
+                detailIntent.putExtra("workoutTraining", workoutTraining)
+                startActivity(detailIntent)
             }
         })
         binding.rvMain.adapter = adapterMain

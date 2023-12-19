@@ -5,12 +5,14 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.bangkit.woai.R
+import com.bangkit.woai.data.WorkoutTraining
 import com.bangkit.woai.databinding.ActivityDetailTrainingBinding
 import com.bangkit.woai.views.camera.CameraActivity
 import com.bangkit.woai.views.camera.NewCameraActivity
@@ -60,6 +62,29 @@ class DetailTrainingActivity : AppCompatActivity() {
 
         hideSystemUI()
 
+        val workoutTraining = intent.getSerializableExtra("workoutTraining") as? WorkoutTraining
+
+        if (workoutTraining != null) {
+            // Log the details
+            Log.d("DetailTrainingActivity", "Received Workout Training:")
+            Log.d("DetailTrainingActivity", "ID: ${workoutTraining.id}")
+            Log.d("DetailTrainingActivity", "Title: ${workoutTraining.title}")
+            Log.d("DetailTrainingActivity", "Image Resource ID: ${workoutTraining.imageResId}")
+            Log.d("DetailTrainingActivity", "Description: ${workoutTraining.description}")
+            Log.d("DetailTrainingActivity", "Duration: ${workoutTraining.duration}")
+            Log.d("DetailTrainingActivity", "Kcal: ${workoutTraining.kcal}")
+
+            val durationInMinutes = workoutTraining.duration / 60
+            binding.imgDetailTraining.setImageResource(workoutTraining.imageResId)
+            binding.txtTitle.text = workoutTraining.title
+            binding.txtBurnKcal.text = "${workoutTraining.kcal} Kcal"
+            binding.txtTimeMin.text = "${durationInMinutes} min"
+            binding.txtDescription.text = workoutTraining.description
+
+            // Use workoutTraining as needed
+        } else {
+            Log.e("DetailTrainingActivity", "Failed to retrieve Workout Training from intent.")
+        }
     }
 
     private fun openCamera() {

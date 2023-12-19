@@ -330,7 +330,7 @@ class NewCameraActivity : AppCompatActivity() {
                                 incorrect = null,
                                 userId = prefId,
                                 upCorrect = null,
-                                description = "kelazz test",
+                                description = null,
                                 downCorrect = null,
                                 type = "60-Second-PushUp"
                             )

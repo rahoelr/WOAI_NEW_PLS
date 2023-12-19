@@ -1,9 +1,7 @@
 package com.bangkit.woai.views.main
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.woai.data.WorkoutTraining
 import com.bangkit.woai.databinding.ItemCardMainBinding
@@ -11,7 +9,7 @@ import com.bangkit.woai.views.details_training.DetailTrainingActivity
 import com.bumptech.glide.Glide
 
 class WorkoutTrainingAdapter(
-    private val workoutTraining: List<WorkoutTraining>,
+    private val workoutTrainingList: List<WorkoutTraining>,
     private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<WorkoutTrainingAdapter.ViewHolder>() {
 
@@ -24,8 +22,6 @@ class WorkoutTrainingAdapter(
 
         fun bind(workoutTraining: WorkoutTraining) {
             binding.textTitle.text = workoutTraining.title
-            binding.imageView.setImageResource(workoutTraining.imageResId)
-
             Glide.with(binding.root)
                 .load(workoutTraining.imageResId)
                 .centerCrop()
@@ -33,8 +29,6 @@ class WorkoutTrainingAdapter(
 
             binding.root.setOnClickListener {
                 listener.onItemClick(workoutTraining)
-                val detailAct = Intent(binding.root.context, DetailTrainingActivity::class.java)
-                startActivity(binding.root.context, detailAct, null)
             }
         }
     }
@@ -46,10 +40,10 @@ class WorkoutTrainingAdapter(
     }
 
     override fun getItemCount(): Int {
-        return workoutTraining.size
+        return workoutTrainingList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(workoutTraining[position])
+        holder.bind(workoutTrainingList[position])
     }
 }
