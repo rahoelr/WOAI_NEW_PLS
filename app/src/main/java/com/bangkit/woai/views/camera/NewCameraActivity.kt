@@ -1,6 +1,7 @@
 package com.bangkit.woai.views.camera
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -31,6 +32,7 @@ import com.bangkit.woai.data.request.TrainingActivityRequest
 import com.bangkit.woai.data.retrofit.ApiConfig
 import com.bangkit.woai.databinding.ActivityNewCameraBinding
 import com.bangkit.woai.ml.AutoModel15Desember2023
+import com.bangkit.woai.views.history.HistoryActivity
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.objects.ObjectDetector
@@ -58,6 +60,7 @@ class NewCameraActivity : AppCompatActivity() {
     private lateinit var viewModel: CameraViewModel
     private lateinit var sharedPref: PreferenceHelper
     private lateinit var cameraExecutor: ExecutorService
+    private var toast: Toast? = null
 
     private var totalUpCorrect = 0
     private var totalDownCorrect = 0
@@ -154,17 +157,24 @@ class NewCameraActivity : AppCompatActivity() {
                 "2 Up-Correct" -> {
                     totalUpCorrect++
 //                    updateCountTextView(binding.txtResultUpCorrect, "Total : $totalUpCorrect")
+                    showToastOnUiThread("Hebat! Pertahankan kontrol saat naik, pastikan tubuh tetap lurus, dan otot inti terus bekerja.")
                     upright = true
                 }
 
                 "0 Down-Correct" -> {
                     totalDownCorrect++
 //                    updateCountTextView(binding.txtResultDownCorrect, "Total : $totalDownCorrect")
+                    showToastOnUiThread("Bagus! Pertahankan kontrol saat turun, pastikan tubuh tetap lurus, dan otot inti teraktivasi. ")
                     downright = true
                 }
 
+                "3 Up-Wrong" -> {
+                    showToastOnUiThread("Pastikan tubuh Anda lurus dari kepala hingga tumit, tangan lebar dari bahu, jari-jari ke depan, siku membentuk sudut 45 derajat, dan aktifkan otot inti untuk stabilitas.")
+                }
 
-
+                "1 Down-Wrong" -> {
+                    showToastOnUiThread("Pastikan turun dengan kontrol penuh, tubuh tetap lurus, tangan lebar dari bahu, dan otot inti aktif.")
+                }
 
                 else -> {
                     Log.d("null_total", "total 0")
@@ -196,6 +206,20 @@ class NewCameraActivity : AppCompatActivity() {
     private fun showToast(message: String) {
         runOnUiThread {
 //            binding.result.text = message
+        }
+    }
+
+    private fun showToastOnUiThread(message: String) {
+        try {
+            runOnUiThread {
+                if (!isFinishing) {
+                    toast?.cancel() // Hentikan Toast sebelumnya jika ada
+                    toast = Toast.makeText(this@NewCameraActivity, message, Toast.LENGTH_SHORT)
+                    toast?.show()
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("NewCameraActivity", "Error showing toast: ${e.message}")
         }
     }
 
@@ -283,7 +307,10 @@ class NewCameraActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        closeCamera()
+        toast?.cancel()
+        finish()
+
+
     }
 
     private fun closeCamera() {
@@ -345,6 +372,8 @@ class NewCameraActivity : AppCompatActivity() {
                             )
 
                             viewModel.addUserActivity(prefToken, trainingActivityRequest)
+                            val historyAct = Intent(this@NewCameraActivity, HistoryActivity::class.java)
+                            startActivity(historyAct)
                         }
                     }.start()
                     binding.btnPlayPause.setIconResource(R.drawable.baseline_pause_24)
@@ -372,4 +401,6 @@ class NewCameraActivity : AppCompatActivity() {
             alertDialog.dismiss()
         }
     }
+
+
 }
