@@ -52,6 +52,7 @@ class NewCameraActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private var countDownTimer: CountDownTimer? = null
     private var remainingTimeMillis: Long = 0
+    private var targetTimeMillis: Long = 0
     private var isRecording: Boolean = false
     private lateinit var viewModel: CameraViewModel
     private lateinit var sharedPref: PreferenceHelper
@@ -73,7 +74,7 @@ class NewCameraActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_new_camera)
 
         tfliteModel = AutoModel15Desember2023.newInstance(this)
-//        binding.rightPushupCount.text = "Total : $rightPushUpCount"
+        binding.rightPushupCount.text = "Total : $rightPushUpCount"
 //        binding.txtResultUpCorrect.text = "Total : $totalUpCorrect"
 //        binding.txtResultDownCorrect.text = "Total : $totalDownCorrect"
 
@@ -165,7 +166,7 @@ class NewCameraActivity : AppCompatActivity() {
 
             if (upright && downright) {
                 rightPushUpCount++
-//                updateCountTextView(binding.rightPushupCount, "Total : $rightPushUpCount")
+                updateCountTextView(binding.rightPushupCount, "Total : $rightPushUpCount")
                 upright = false
                 downright = false
             }
@@ -300,9 +301,7 @@ class NewCameraActivity : AppCompatActivity() {
             // Tambahkan hitungan mundur 3 detik
             object : CountDownTimer(3000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    // Update UI atau lakukan hal lain selama hitungan mundur
                     val secondsRemaining = millisUntilFinished / 1000
-                    // Misalnya, tampilkan hitungan mundur pada suatu tempat di UI
                     binding.txtCountdown.text = secondsRemaining.toString()
 
                     binding.txtCountdown.visibility = if (secondsRemaining > 0) View.VISIBLE else View.GONE
@@ -310,8 +309,8 @@ class NewCameraActivity : AppCompatActivity() {
                 }
 
                 override fun onFinish() {
-                    // Setelah hitungan mundur 3 detik selesai, mulai timer utama
-                    val targetTimeMillis = 10000L
+
+                    val targetTimeMillis = 8000L
 
                     countDownTimer = object : CountDownTimer(
                         if (remainingTimeMillis > 0) remainingTimeMillis else targetTimeMillis,
@@ -323,10 +322,9 @@ class NewCameraActivity : AppCompatActivity() {
                         }
 
                         override fun onFinish() {
-                            // Timer finished, close the camera or perform any other action
                             finish()
                             val trainingActivityRequest = TrainingActivityRequest(
-                                duration = 60,
+                                duration = (targetTimeMillis / 1000).toInt(),
                                 total = 8,
                                 correct = null,
                                 incorrect = null,

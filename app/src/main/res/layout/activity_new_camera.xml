@@ -187,18 +187,19 @@
 
 <!--        </LinearLayout>-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/right_pushup_count"-->
-<!--            android:text=""-->
-<!--            android:gravity="center"-->
-<!--            android:padding="@dimen/_6sdp"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_18ssp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
+        <TextView
+            android:layout_marginTop="@dimen/_20sdp"
+            android:id="@+id/right_pushup_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:padding="@dimen/_6sdp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp" />
 
     </RelativeLayout>
 
