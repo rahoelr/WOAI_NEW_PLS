@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
@@ -32,6 +34,7 @@ import com.bangkit.woai.data.request.TrainingActivityRequest
 import com.bangkit.woai.data.retrofit.ApiConfig
 import com.bangkit.woai.databinding.ActivityNewCameraBinding
 import com.bangkit.woai.ml.AutoModel15Desember2023
+import com.bangkit.woai.views.details_training.DetailTrainingActivity
 import com.bangkit.woai.views.history.HistoryActivity
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.common.model.LocalModel
@@ -61,6 +64,7 @@ class NewCameraActivity : AppCompatActivity() {
     private lateinit var sharedPref: PreferenceHelper
     private lateinit var cameraExecutor: ExecutorService
     private var toast: Toast? = null
+
 
     private var totalUpCorrect = 0
     private var totalDownCorrect = 0
@@ -372,8 +376,16 @@ class NewCameraActivity : AppCompatActivity() {
                             )
 
                             viewModel.addUserActivity(prefToken, trainingActivityRequest)
-                            val historyAct = Intent(this@NewCameraActivity, HistoryActivity::class.java)
-                            startActivity(historyAct)
+                            val detailTrainingIntent = Intent(this@NewCameraActivity, DetailTrainingActivity::class.java)
+                            detailTrainingIntent.putExtra("workoutTitle", workoutTitle)
+                            detailTrainingIntent.putExtra("workoutDuration", workoutDuration)
+                            startActivity(detailTrainingIntent)
+
+                            // Delay 2 detik sebelum intent ke HistoryActivity
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                val historyIntent = Intent(this@NewCameraActivity, HistoryActivity::class.java)
+                                startActivity(historyIntent)
+                            }, 2000)
                         }
                     }.start()
                     binding.btnPlayPause.setIconResource(R.drawable.baseline_pause_24)
