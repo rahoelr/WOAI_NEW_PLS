@@ -12,8 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.woai.data.preferences.Constant
 import com.bangkit.woai.data.preferences.PreferenceHelper
 import com.bangkit.woai.data.repository.UserRepository
+import com.bangkit.woai.data.response.SpecificActivityResponse
 import com.bangkit.woai.data.retrofit.ApiConfig
 import com.bangkit.woai.databinding.ActivityTrainningSummaryBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TrainingSummaryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTrainningSummaryBinding
@@ -44,6 +47,7 @@ class TrainingSummaryActivity : AppCompatActivity() {
         }
         viewModel.specificActivity.observe(this, Observer { specificActivityResponse ->
             Log.d("TrainingSummaryActivity", "Specific Activity Response: $specificActivityResponse")
+            updateUI(specificActivityResponse)
         })
     }
 
@@ -58,6 +62,22 @@ class TrainingSummaryActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+    }
+
+    private fun updateUI(specificActivityResponse: SpecificActivityResponse) {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val createdAtDate = dateFormat.parse(specificActivityResponse.data?.get(0)?.createdAt ?: "")
+        val formattedDate = dateFormat.format(createdAtDate ?: "")
+        binding.txtDate.text = formattedDate
+        binding.txtTraining.text = specificActivityResponse.data?.get(0)?.type ?: ""
+        binding.txtReps.text = specificActivityResponse.data?.get(0)?.total?.toString() + " reps"
+        binding.txtTime.text = specificActivityResponse.data?.get(0)?.duration?.let { formatTime(it) } ?: ""
+    }
+
+    private fun formatTime(seconds: Int): String {
+        val minutes = seconds / 60
+        val remainingSeconds = seconds % 60
+        return String.format("%02d:%02d", minutes, remainingSeconds)
     }
 
 }
