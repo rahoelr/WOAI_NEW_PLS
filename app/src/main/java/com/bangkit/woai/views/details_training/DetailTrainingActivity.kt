@@ -19,6 +19,9 @@ import com.bangkit.woai.views.camera.NewCameraActivity
 
 class DetailTrainingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailTrainingBinding
+    private var workoutTraining: WorkoutTraining? = null
+    private var workoutTitle: String? = null
+    private var workoutDuration: Int = 0
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -81,6 +84,9 @@ class DetailTrainingActivity : AppCompatActivity() {
             binding.txtTimeMin.text = "${durationInMinutes} min"
             binding.txtDescription.text = workoutTraining.description
 
+            workoutTitle = workoutTraining.title
+            workoutDuration = workoutTraining.duration
+
             // Use workoutTraining as needed
         } else {
             Log.e("DetailTrainingActivity", "Failed to retrieve Workout Training from intent.")
@@ -93,10 +99,11 @@ class DetailTrainingActivity : AppCompatActivity() {
     }
 
     private fun openNewCamera() {
-        val intentCameraX = Intent(this, NewCameraActivity::class.java)
-        startActivity(intentCameraX)
+        val intentCamera = Intent(this, NewCameraActivity::class.java)
+        intentCamera.putExtra("workoutTitle", workoutTitle)
+        intentCamera.putExtra("workoutDuration", workoutDuration)
+        startActivity(intentCamera)
     }
-
     private fun hideSystemUI() {
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

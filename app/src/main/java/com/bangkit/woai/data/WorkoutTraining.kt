@@ -8,5 +8,5 @@ data class WorkoutTraining(
     val imageResId: Int,
     val description: String,
     val duration: Int,
-    val kcal: Int
+    val kcal: Int?
 ) : Serializable

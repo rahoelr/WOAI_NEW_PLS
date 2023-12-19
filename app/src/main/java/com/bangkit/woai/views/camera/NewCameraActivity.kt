@@ -23,6 +23,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.woai.R
+import com.bangkit.woai.data.WorkoutTraining
 import com.bangkit.woai.data.preferences.Constant
 import com.bangkit.woai.data.preferences.PreferenceHelper
 import com.bangkit.woai.data.repository.UserRepository
@@ -115,6 +116,12 @@ class NewCameraActivity : AppCompatActivity() {
         binding.btnPlayPause.setOnClickListener {
             toggleTimer()
         }
+
+        val workoutTitle = intent.getStringExtra("workoutTitle")
+        val workoutDuration = intent.getIntExtra("workoutDuration", 0)
+        Log.d("NewCameraActivity", "Workout Title: $workoutTitle")
+        Log.d("NewCameraActivity", "Workout Duration: $workoutDuration seconds")
+
 
     }
 
@@ -297,6 +304,8 @@ class NewCameraActivity : AppCompatActivity() {
     private fun toggleTimer() {
         val prefId = sharedPref.getString(Constant.PREF_ID)?.toIntOrNull() ?: 0
         val prefToken = sharedPref.getString(Constant.PREF_TOKEN)?:""
+        val workoutTitle = intent.getStringExtra("workoutTitle")
+        val workoutDuration = intent.getIntExtra("workoutDuration", 0)
         if (countDownTimer == null) {
             // Tambahkan hitungan mundur 3 detik
             object : CountDownTimer(3000, 1000) {
@@ -310,7 +319,7 @@ class NewCameraActivity : AppCompatActivity() {
 
                 override fun onFinish() {
 
-                    val targetTimeMillis = 8000L
+                    val targetTimeMillis = workoutDuration * 1000L
 
                     countDownTimer = object : CountDownTimer(
                         if (remainingTimeMillis > 0) remainingTimeMillis else targetTimeMillis,
@@ -332,7 +341,7 @@ class NewCameraActivity : AppCompatActivity() {
                                 upCorrect = null,
                                 description = null,
                                 downCorrect = null,
-                                type = "60-Second-PushUp"
+                                type = workoutTitle
                             )
 
                             viewModel.addUserActivity(prefToken, trainingActivityRequest)
