@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class SpecificActivityResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem?>? = null,
+	val data: List<DataItemSpecific?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
