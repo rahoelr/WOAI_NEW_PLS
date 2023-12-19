@@ -38,7 +38,7 @@ class HistoryViewModel(private val userRepository: UserRepository):ViewModel() {
                         val historyTrainingList = dataList?.mapNotNull { dataItemActivity ->
                             mapUserActivityToHistoryTraining(dataItemActivity ?: return@mapNotNull null)
                         } ?: emptyList()
-                        _historyTrainingList.value = historyTrainingList.sortedByDescending { it.date }
+                        _historyTrainingList.value = historyTrainingList
                     }
                     _emptyState.postValue(dataList.isNullOrEmpty())
                 }
