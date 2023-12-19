@@ -39,7 +39,7 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
                             mapUserActivityToHistoryTraining(dataItemActivity ?: return@mapNotNull null)
                         } ?: emptyList()
                         _historyTrainingList.value = historyTrainingList
-                        sortHistoryTrainingList()
+                        // sortHistoryTrainingList()
                     }
                 }
             } catch (e: Exception) {
@@ -60,7 +60,7 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
         )
     }
 
-    fun sortHistoryTrainingList() {
-        _historyTrainingList.value = _historyTrainingList.value?.sortedByDescending { it.date }
-    }
+    // fun sortHistoryTrainingList() {
+    //     _historyTrainingList.value = _historyTrainingList.value?.sortedByDescending { it.date }
+    // }
 }
