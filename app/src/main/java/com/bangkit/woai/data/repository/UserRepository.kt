@@ -10,6 +10,7 @@ import com.bangkit.woai.data.response.DetailUserResponse
 import com.bangkit.woai.data.response.LoginResponse
 import com.bangkit.woai.data.response.LogoutResponse
 import com.bangkit.woai.data.response.RegisterResponse
+import com.bangkit.woai.data.response.SpecificActivityResponse
 import com.bangkit.woai.data.response.TrainingActivityResponse
 import com.bangkit.woai.data.response.UserActivityResponse
 import com.bangkit.woai.data.retrofit.ApiService
@@ -34,6 +35,10 @@ class UserRepository private constructor(
 
     suspend fun getUserActivity(id: Int, token: String): UserActivityResponse{
         return apiService.getActivityUser(id,token)
+    }
+
+    suspend fun getSpecificActivity(id: Int, token: String): SpecificActivityResponse{
+        return apiService.getSpecificActivity(id,token)
     }
 
     suspend fun getUserData(id: Int, token: String): DetailUserResponse {

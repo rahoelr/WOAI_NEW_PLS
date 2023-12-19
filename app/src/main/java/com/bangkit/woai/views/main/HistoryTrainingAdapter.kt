@@ -1,6 +1,7 @@
 package com.bangkit.woai.views.main
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +44,9 @@ class HistoryTrainingAdapter(
             binding.txtTime.text = historyTraining.time
 
             itemView.setOnClickListener {
+                Log.d("HistoryTrainingAdapter", "Item clicked - Date: ${historyTraining.date}, Time: ${historyTraining.time}, id: ${historyTraining.id}")
+
+                // Buka TrainingSummaryActivity
                 val intent = Intent(itemView.context, TrainingSummaryActivity::class.java)
                 itemView.context.startActivity(intent)
             }

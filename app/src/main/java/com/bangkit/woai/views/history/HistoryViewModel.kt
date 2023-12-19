@@ -55,6 +55,7 @@ class HistoryViewModel(private val userRepository: UserRepository):ViewModel() {
         val formattedDate = dateFormat.format(createdAtDate ?: "")
 
         return HistoryTraining(
+            id = dataItemActivity.id,
             date = formattedDate,
             time = "${dataItemActivity.duration} second",
         )

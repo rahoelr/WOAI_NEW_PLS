@@ -8,6 +8,7 @@ import com.bangkit.woai.data.response.DetailUserResponse
 import com.bangkit.woai.data.response.LoginResponse
 import com.bangkit.woai.data.response.LogoutResponse
 import com.bangkit.woai.data.response.RegisterResponse
+import com.bangkit.woai.data.response.SpecificActivityResponse
 import com.bangkit.woai.data.response.TrainingActivityResponse
 import com.bangkit.woai.data.response.UserActivityResponse
 import retrofit2.http.Body
@@ -56,5 +57,12 @@ interface ApiService {
         @Path("id") id: Int,
         @Header("x-token") token: String
     ): DeleteActivityResponse
+
+    @GET("activity1/{id}")
+    suspend fun getSpecificActivity(
+        @Path("id") id: Int,
+        @Header("x-token") token: String
+    ): SpecificActivityResponse
+
 
 }
