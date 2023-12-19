@@ -9,6 +9,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import com.bangkit.woai.data.preferences.Constant
 import com.bangkit.woai.data.preferences.PreferenceHelper
 import com.bangkit.woai.data.repository.UserRepository
@@ -49,6 +51,13 @@ class TrainingSummaryActivity : AppCompatActivity() {
             Log.d("TrainingSummaryActivity", "Specific Activity Response: $specificActivityResponse")
             updateUI(specificActivityResponse)
         })
+
+        val videoItem = MediaItem.fromUri("https://raw.githubusercontent.com/rahoelr/WOAI_NEW_FIX/main/pushup_tutorial.mp4\n")
+        val player = ExoPlayer.Builder(this).build().also { exoPlayer ->
+            exoPlayer.setMediaItem(videoItem)
+            exoPlayer.prepare()
+        }
+        binding.workoutVideoView.player = player
     }
 
     private fun hideSystemUI() {

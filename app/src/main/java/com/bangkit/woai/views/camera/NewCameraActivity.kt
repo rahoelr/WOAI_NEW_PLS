@@ -3,6 +3,7 @@ package com.bangkit.woai.views.camera
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -11,6 +12,8 @@ import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -123,6 +126,8 @@ class NewCameraActivity : AppCompatActivity() {
         binding.btnPlayPause.setOnClickListener {
             toggleTimer()
         }
+
+        hideSystemUI()
 
         val workoutTitle = intent.getStringExtra("workoutTitle")
         val workoutDuration = intent.getIntExtra("workoutDuration", 0)
@@ -376,16 +381,6 @@ class NewCameraActivity : AppCompatActivity() {
                             )
 
                             viewModel.addUserActivity(prefToken, trainingActivityRequest)
-                            val detailTrainingIntent = Intent(this@NewCameraActivity, DetailTrainingActivity::class.java)
-                            detailTrainingIntent.putExtra("workoutTitle", workoutTitle)
-                            detailTrainingIntent.putExtra("workoutDuration", workoutDuration)
-                            startActivity(detailTrainingIntent)
-
-                            // Delay 2 detik sebelum intent ke HistoryActivity
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                val historyIntent = Intent(this@NewCameraActivity, HistoryActivity::class.java)
-                                startActivity(historyIntent)
-                            }, 2000)
                         }
                     }.start()
                     binding.btnPlayPause.setIconResource(R.drawable.baseline_pause_24)
@@ -412,6 +407,19 @@ class NewCameraActivity : AppCompatActivity() {
         btnGotIt.setOnClickListener {
             alertDialog.dismiss()
         }
+    }
+
+    private fun hideSystemUI() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
     }
 
 
