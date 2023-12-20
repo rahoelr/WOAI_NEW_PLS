@@ -9,30 +9,46 @@
     app:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:id="@+id/linear_layout_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
+        android:orientation="horizontal"
         android:padding="@dimen/_16sdp">
 
-        <TextView
-            android:gravity="center"
-            android:id="@+id/txt_date"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/linear_layout_date2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="15 November 2023"
-            android:textSize="@dimen/_18ssp"
-            android:fontFamily="@font/poppins_bold_italic"
-            android:textColor="@color/white"/>
-        <TextView
-            android:id="@+id/txt_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Periode: 10:00"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"/>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold_italic"
+                android:text="15-12-2023"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="60 second"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/date_icon"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/cd_date_ic"
+            android:src="@drawable/ic_history" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
